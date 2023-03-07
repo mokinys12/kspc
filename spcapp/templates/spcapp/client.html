@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>редактирование</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'spcapp/css/spcapp.css' %}">
+</head>
+<body>
+    <div class="container">
+        <strong>Клиент</strong>
+
+        {% if dop.alarm %}
+            <p> {{ dop.alarm }} </p>
+        {% endif %}
+    
+        {% if  words %}
+{# если не указывать action, форма перезагрузит тот адрес, из которого она открывалась #}        
+{# это не очень удобно: придется при запуске проверять, почему запущен адрес #}
+{# и реагировать на разные запуски по-разному #}
+            <form action="clntsave/" method="POST">
+{# а с action надо учитывать, что указанная страница запустится из уже имеющейся-см. urls.py #}                
+                {% csrf_token %}
+<!-- тут может быть только одна строка. -->   
+{#                поле сортировки<br>  #}
+                <input type="hidden" name="sel_fld" value="{{ dop.fld_num }}"> {#<br>#}
+{#                строка поиска<br>  #}
+                <input type="hidden" name="fnd_str" value="{{ dop.fnd_str }}">  {#<br>#}
+{#                флаг отображения удаленных<br>  #}
+                <input type="hidden" name="isdel" value="{{ dop.del_show }}">  {#<br>#}
+{#                <p>id<br>  #}
+                <input type="hidden" name="row_id" value="{{ words.id }}">  {#</p>#}
+                <p>имя<br>
+                <input type="text" name="nam" value="{{ words.nam }}">&nbsp;<input type="text" name="kanam" value="{{ words.kanam }}"></p>
+                <p>фамилия<br>
+                <input type="text" name="fam" value="{{ words.fam }}">&nbsp;<input type="text" name="kafam" value="{{ words.kafam }}"></p>
+                <p>код<br>
+                <input type="text" name="bkod" value="{{ words.bkod }}"></p>
+                <p>адрес<br>
+                <input type="text" name="addr" value="{{ words.addr }}"></p>
+                <p><input type="checkbox" name="is_del"
+                {% if words.is_del != 0 %}
+                    checked
+                {% endif %} 
+                >&nbsp;&nbsp;удалено</p> 
+    
+                <button type="submit" class="submit-with-icon" name="btn_save"><span class="btn btn-default glyphicon glyphicon-save"></span></button>
+            </form>
+        {% endif %}
+        <br>
+        <a href="{% url 'nindex' %}?sel_fld={{ dop.fld_num }}&fnd_str={{ dop.fnd_str }}&isdel={{ dop.del_show }}">клиенты</a>
+    </div>
+<!--    промежуточный адрес, куда можно передать все переменные и который с этими переменными запустит fill_clnt -->
+</body>

@@ -1,0 +1,52 @@
+{% extends "spcapp/base.html" %}
+
+{% block title %}
+    Словарик
+{% endblock %}
+
+{% block content %}
+    <center><b>список наиболее часто употребляемых выражений</b></center>
+    <br>
+    <table class="table">
+        <thead>
+        <tr>
+            <th style="display: none">id</th>
+            {% if dop.fld_num == 1 %}
+                <th bgcolor="#dcdcdc">
+            {% else %}
+                <th>
+            {% endif %}
+            <a href="{% url 'nsel_fld' %}?fld_num=1&what_show={{ dop.show }}&fnd_str={{ dop.fnd_str }}">русский</a></th> 
+            {% if dop.fld_num == 2 %}
+                <th bgcolor="#dcdcdc">
+            {% else %}
+                <th>
+            {% endif %}
+            <a href="{% url 'nsel_fld' %}?fld_num=2&what_show={{ dop.show }}&fnd_str={{ dop.fnd_str }}">литовский</a></th>
+            <th>тип работы</th>
+            <th style="display: none">wrk_id</th>
+            <th>&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if  words %}
+            {% for one_row in words %}
+                <tr>
+                    <td style="display: none">{{ one_row.id }}</td>
+                    <td>{{ one_row.rword }}</td>
+                    <td>{{ one_row.lword }}</td>
+                    <td>{{ one_row.type }}</td>
+                    <td style="display: none">{{ one_row.type_id }}</td>
+                    <td><a href="{% url 'nnew_dict' %}?sel_fld={{ dop.fld_num }}&fnd_str={{ dop.fnd_str }}&row_id={{ one_row.id }}"><span class="btn btn-default glyphicon glyphicon-pencil"></span></a>    
+                        <a href="{% url 'ndeldict' %}?sel_fld={{ dop.fld_num }}&fnd_str={{ dop.fnd_str }}&row_id={{one_row.id}}"><span class="btn btn-default glyphicon glyphicon-trash"></span></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr><td colspan="7" align="center">косяк. пустой запрос</td></tr>
+        {% endif %}
+        </tbody>
+    </table>
+
+
+{% endblock %}

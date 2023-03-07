@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<!-- {% load static %} -->
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>
+        {% block title %}
+            заголовок
+        {% endblock %}
+    </title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'spcapp/css/spcapp.css' %}">
+</head>
+<body>
+    <div class="col-lg-1">  
+        страницы:
+        <ul>
+            <li><a href="{% url 'nindex' %}">клиенты</a></li>
+            <li><a href="{% url 'ndict' %}">словарь</a></li>
+            <li><a href="{% url 'nmonth' %}">месяцы</a></li>
+        </ul>
+    </div>
+    <div class="col-lg-11">
+<!--     {% if dop.alarm %}
+        <p> {{ dop.alarm }} </p>
+    {% endif %} -->
+
+    <div class="container"> 
+        <!-- <div class="col-lg-11 col-lg-offset-1"> -->
+{# любая кнопка на форме инициирует запуск url=action с вызовом соответствующего view=url.name #}
+{# и, как любая форма, #}        
+{# с передачей в строку адреса (GET все-таки) значений всех text-полей и названия нажатой кнопки #}
+{# если action="", то перезагружается текущая страница #}
+        <form action="findrow" method="GET">
+            <div class="shapka">
+                <input type="hidden" name="sel_fld" value="{{ dop.fld_num }}" size=1>
+                <input type="hidden" name="what_show" value="{{ dop.show }}" size=5>
+                <input type="hidden" name="isdel" value="{{ dop.del_show }}" size=1>
+                    
+                {% if dop.show == 'clnt' %}
+<!-- удаленные могут быть только у клиентов -->                
+                    {% if dop.del_show %}
+                        <a href="{% url 'nisdel' %}?sel_fld={{ dop.fld_num }}&fnd_str={{ dop.fnd_str }}&isdel=0"><span class="btn btn-default glyphicon glyphicon-remove"></span></a>
+                        <label>скрыть удаленных</label>
+                    {% else %}
+                        <a href="{% url 'nisdel' %}?sel_fld={{ dop.fld_num }}&fnd_str={{ dop.fnd_str }}&isdel=1"><span class="btn btn-default glyphicon glyphicon-ok"></span></a>
+                        <label>показать удаленных</label>
+                    {% endif %}
+
+                    <a href="{% url 'nnew_clnt' %}?sel_fld={{ dop.fld_num }}&fnd_str={{ dop.fnd_str }}&isdel={{ dop.del_show }}"><span class="btn btn-default glyphicon glyphicon-plus top_line"></span></a> 
+                    <button type="submit" class="submit-with-icon top_line" name="run_fnd"><span class="btn btn-default glyphicon glyphicon-search"></span></button>
+                {% elif dop.show == 'dict'%}
+                    <a href="{% url 'nnew_dict' %}?sel_fld={{ dop.fld_num }}&fnd_str={{ dop.fnd_str }}" ><span class="btn btn-default glyphicon glyphicon-plus top_line"></span></a>
+                    <button type="submit" class="submit-with-icon top_line" name="run_fnd"><span class="btn btn-default glyphicon glyphicon-search"></span></button>
+                {% endif %}
+<!-- а у месяцев вообще кнопок нет -->                
+                <!-- <button type="submit" class="submit-with-icon top_line" name="new_row"><span class="btn btn-default glyphicon glyphicon-plus"></span></button> -->
+                <!-- <button type="submit" class="submit-with-icon top_line" name="run_fnd"><span class="btn btn-default glyphicon glyphicon-search"></span></button> -->
+                {% if dop.show != 'month' %}
+                    <input type="text" class="top_text" name="fnd_str" value="{{ dop.fnd_str }}" class="top_text" size=9>
+                {% endif %}
+            </div>
+        </form>
+        
+        {% block content %}
+        {% endblock %}
+    </div>
+    </div>
+</body>
+</html>
+
+<!--# col-md-3 col-md-offset-9
+#class="top_line"
+#  background: transparent;
+# content container 
+url 'ntry_clnt'-->
+

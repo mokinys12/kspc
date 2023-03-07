@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>редактирование</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'spcapp/css/spcapp.css' %}">
+</head>
+<body>
+    <div class="container">
+        <strong>Перевод</strong>
+
+        {% if dop.alarm %}
+            <p> {{ dop.alarm }} </p>
+        {% endif %}
+
+        {% if  words %}
+            <form action="dictsave" method="POST">
+                {% csrf_token %}
+                <!-- поле сортировки<br>   -->
+                <input type="hidden" name="sel_fld" value="{{ dop.fld_num }}"><br>
+                <!-- строка поиска<br> -->
+                <input type="hidden" name="fnd_str" value="{{ dop.fnd_str }}"><br>
+                <!-- <p>id<br> -->
+                <input type="hidden" name="row_id" value="{{ words.id }}"></p>
+                <p>русский вариант<br>
+                <input type="text" name="rwrd" value="{{ words.rword }}"></p>
+                <p>литовский вариант<br>
+                <input type="text" name="lwrd" value="{{ words.lword }}"></p>
+                <p> <select name="wtypes">
+                        {% for one_row in types %}
+                            <option value="{{ one_row.t_id }}"
+                            {% if words.type_id == one_row.t_id %} selected{% endif %}
+                            >{{ one_row.t_nam }}</option>
+                        {% endfor %}
+                    </select>
+                </p>
+
+                <button type="submit" class="submit-with-icon" name="btn_save"><span class="btn btn-default glyphicon glyphicon-save"></span></button>
+            </form>
+        {% endif %}
+        <br>
+        <a href="{% url 'ndict' %}?sel_fld={{ dop.fld_num }}&fnd_str={{ dop.fnd_str }}">словарь</a>
+    </div>
+</body>                

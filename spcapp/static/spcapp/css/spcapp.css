@@ -1,0 +1,86 @@
+body
+{ 
+    font-family: serif, Courier, monospace;
+}
+/*
+.main
+{
+    margin-top: 90px;
+}
+
+.shapka
+{
+    align-self: stretch;
+    align-content: center;
+    height: 100px;
+    background-color: lightblue;
+    padding: 8px 5px 12px;
+    position: fixed;
+    width: 100%;
+    top: 0px;
+}
+
+.upmenu
+{
+    margin-top: 0px;
+}
+
+.submetu
+{
+    margin-top: 20px;
+    padding-top: 20px;
+}
+*/
+
+.shapka
+{
+    align-self: stretch;
+    align-content: center;
+    height: 65px;
+    background-color: lightblue;
+}
+
+.top_text
+{
+    float: right;
+    padding: 6px;
+    margin-right: 6px;
+    margin-top: 4px;
+}
+
+.top_line
+{
+    float: right;
+    vertical-align: -webkit-baseline-middle; 
+}
+
+.top_left
+{
+    float: left;
+    vertical-align: -webkit-baseline-middle; 
+}
+
+.arrow
+{
+    color: blue;
+    font-size: 1.5em;
+}
+
+.submit-with-icon
+{
+    border: 0px;
+    padding: 0;
+    outline: 0;
+}
+
+.pen
+{
+    font-weight: bold;
+    font-style: italic;
+    color: blue;
+}
+
+.hidden-field
+{
+    display: none;
+}

@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>форма для банка</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'spcapp/css/spcapp.css' %}">
+</head>
+<body>
+    <div class="container">
+        <form action="" method="GET">
+            <input type="hidden" name="sel_fld" value="{{ dop.fld_num }}">
+            <input type="hidden" name="fnd_str" value="{{ dop.fnd_str }}">
+            <input type="hidden" name="is_del" value="{{ dop.del_show }}">
+            <input type="hidden" name="row_id" value="{{ dop.id }}">
+            <p>
+                сумма к оплате 
+                {% if dop.tmp_money %}
+                    <input type="number" step="0.01" min="0" placeholder="0,00" name="money" value="{{ dop.tmp_money }}">
+                {% else %}
+                    <input type="number" step="0.01" min="0" placeholder="0,00" name="money">
+                {% endif %}
+                 <input type="submit" value="создать">
+            </p>
+        </form>
+        <p><center><span class='pen'>{{ words.god }}</span> m.   <span class='pen'>{{ words.mon }}  {{ words.day }}</span> d.</center></p>
+        <p>Sumokėti už <span class='pen'>mokėtojo kodas {{ words.kod }}</span></p>
+        <p><span class="pen">pagalbos į namus paslaugas už {{words.oldmon }} mėn. už</span></p>
+        <p><span class="pen">{{words.knam}} {{ words.kfam }}</span></p>
+        <br>
+        <p>Sumokėta suma: <span class="pen">{{ words.suma }}</span>&nbsp;&nbsp;&nbsp;| <span class="pen">{{dop.tmp_money}}</span></p>
+        <br>
+        <p>Sumokėjau <span class="pen">{{ words.nam }} {{ words.fam }}</span></p>
+        <br>
+        <p>Pinigus gavau <span class="pen">Individualios priežiuros darbuotoja: Liubov Stulnova</span></p>
+        <br>
+        <br>
+        {% if dop.alarm %}
+            <p><font color="red"> {{ dop.alarm }} </font></p>
+            <br>
+        {% endif %}
+        <a href="{% url 'nindex' %}?sel_fld={{ dop.fld_num }}&fnd_str={{ dop.fnd_str }}&isdel={{ dop.del_show }}">клиенты</a>
+    </div>
+</body>
+</html>

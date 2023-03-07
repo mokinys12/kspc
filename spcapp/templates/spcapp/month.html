@@ -1,0 +1,36 @@
+{% extends "spcapp/base.html" %}
+
+{% block title %}
+    Месяцы
+{% endblock %}
+
+{% block content %}
+    <center><b>месяцы в требуемых падежах</b></center>
+    <br>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th style="display: none">id</th>
+            <th>русское название</th>
+            <th>литовское название</th>
+            <th>какого месяца?</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if  words %}
+            {% for one_row in words %}
+                <tr>
+                    <td style="display: none">{{ one_row.id }}</td>
+                    <td>{{ one_row.n_ru }}</td>
+                    <td>{{ one_row.n_lt }}</td>
+                    <td>{{ one_row.ko_lt }}</td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr><td colspan="7" align="center">косяк. пустой запрос</td></tr>
+        {% endif %}
+        </tbody>
+    </table>
+
+
+{% endblock %}

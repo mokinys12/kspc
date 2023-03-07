@@ -1,0 +1,76 @@
+{% extends "spcapp/base.html" %}
+
+{% block title %}
+    первая страница программы
+{% endblock %}
+
+{% block content %}
+    <center><b>таблица клиентов</b></center> <br>
+    <a href="#"><span class="btn btn-default glyphicon glyphicon-sort-by-alphabet"></span></a>
+    <a href="#"></a><span class="btn btn-primary glyphicon glyphicon-save"></span></a>
+    <a href="#"></a><span class="btn btn-default glyphicon glyphicon-plus"></span></a>
+    <span class="btn btn-default glyphicon glyphicon-search"></span>
+    <a href="#"></a><span class="btn btn-primary glyphicon glyphicon-pencil"></span></a>
+    <a href="#"></a><span class="btn btn-default glyphicon glyphicon-remove"></span></a>
+    <a href="#"></a><span class="btn btn-default glyphicon glyphicon-ok"></span></a>
+    <br>
+    <table class="table">
+        <thead>
+        <tr>
+            <th style="display: none">id</th>
+{#            фамилия #}
+            {% if dop.fld_num == 1 %}
+                <th bgcolor="#dcdcdc">
+            {% else %}
+                <th>
+            {% endif %}
+            <a href="{% url 'nsel_fld' %}?fld_num=1&isdel={{ dop.del_show }}&what_show={{ dop.show }}&fnd_str={{ dop.fnd_str }}">фамилия</a></th> 
+            {% if dop.fld_num == 2 %}
+                <th bgcolor="#dcdcdc">
+            {% else %}
+                <th>
+            {% endif %}
+{#            имя  #}
+            <a href="{% url 'nsel_fld' %}?fld_num=2&isdel={{ dop.del_show }}&what_show={{ dop.show }}&fnd_str={{ dop.fnd_str }}">имя</a></th>
+            {% if dop.fld_num == 3 %}
+                <th bgcolor="#dcdcdc">
+            {% else %}
+                <th>
+            {% endif %}
+{#            код #}
+            <a href="{% url 'nsel_fld' %}?fld_num=3&isdel={{ dop.del_show }}&what_show={{ dop.show }}&fnd_str={{ dop.fnd_str }}">код</a></th>
+            <th>адрес</th>
+            <th>удален</th>
+            <th>&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if  words %}
+            {% for one_row in words %}
+                <tr>
+                    <td style="display: none">{{ one_row.id }}</td>
+                    <td>{{ one_row.fam }}</td>
+                    <td>{{ one_row.nam }}</td>
+                    <td width=100>{{ one_row.bkod }}</td>
+                    <td>{{ one_row.addr }}</td>
+                    <td>
+                        {% if one_row.is_del == 0 %}
+                            -
+                        {% else %}
+                            +
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'naccount' %}?sel_fld={{ dop.fld_num }}&fnd_str={{ dop.fnd_str }}&isdel={{ dop.del_show }}&row_id={{ one_row.id }}"><span class="btn btn-default glyphicon glyphicon-edit"></span></a>    
+                        <a href="{% url 'nnew_clnt' %}?sel_fld={{ dop.fld_num }}&fnd_str={{ dop.fnd_str }}&isdel={{ dop.del_show }}&row_id={{ one_row.id }}"><span class="btn btn-default glyphicon glyphicon-pencil"></span></a>    
+                        <a href="{% url 'ndelclnt' %}?sel_fld={{ dop.fld_num }}&fnd_str={{ dop.fnd_str }}&isdel={{ dop.del_show }}&row_id={{one_row.id}}"><span class="btn btn-default glyphicon glyphicon-trash"></span></a>  
+                    </td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr><td colspan="7" align="center">косяк. пустой запрос</td></tr>
+        {% endif %}
+        </tbody>
+    </table>
+
+{% endblock %}
