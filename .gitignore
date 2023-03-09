@@ -9,6 +9,6 @@ spcdb.sqlite3
 # это настройки VSCode
 .vscode
 # это мои заметки
-*.txt
+*.inf
 *.ods
 # это настройки системы для папки (Mac и Windows)
